@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>for应用</title>
+	<style type="text/css">
+		body,div,img,h3,ul,li,input {
+			margin:0;
+			padding:0;
+		}
+		img {
+			border:none;
+		}
+		input {
+			line-height: 20px;
+			outline:0;
+			display: block;
+			margin:0 auto;
+		}
+		ul {
+			list-style: none;
+		}
+		h3 {
+			text-align: center;
+			margin-top:30px;
+		}
+		#div1 #wrap {
+			width:600px;
+			height:600px;
+			margin:0 auto;
+			background: url("pic.jpg") no-repeat;
+			background-size: cover;
+			position: relative;
+		}
+		#div1 #wrap div {
+			position: absolute;
+			width:50px;
+			height:50px;
+			background-color: #ccc;
+		}
+		#div2 ul ,#div3 ul {
+			position: relative;
+			width:590px;
+			margin:0 auto;
+		}
+		#div2 ul {
+			height:52px;
+		}
+		#div3 ul {
+			height:600px;
+		}
+		#div2 li ,#div3 li{
+			position: absolute;
+			width:50px;
+			height:50px;
+			line-height: 50px;
+			border:1px solid #000;
+			text-align: center;
+		}
+		#div4 #wrap4 div ,#div5 #wrap5 div {
+			width:50px;
+			height:50px;
+			line-height: 50px;
+			text-align: center;
+			background-color: red;
+			position: absolute;
+		}
+		#div4 #wrap4 ,#div5 #wrap5 {
+			position: relative;
+			width:250px;
+			height:250px;
+			margin:0 auto;
+		}
+		#wrap6 {
+			position: relative;
+			width:600px;
+			height:600px;
+			margin:0 auto;
+		}
+		#wrap6 div {
+			width:50px;
+			height:50px;
+			background-color: #ff0000;
+			position: absolute;
+		}
+	</style>
+	<script type="text/javascript">
+		window.onload=function(){
+			//div1
+			var str='';
+			var l=0;
+			var t=0;
+			var oWrap=document.getElementById('wrap');
+			for(var i=0;i<144;i++){
+				l=(i%12)*50;
+				t=parseInt(i/12)*50;
+				str+='<div style="left:'+l+'px;top:'+t+'px"></div>'
+			}
+			oWrap.innerHTML=str;
+			var aDiv=oWrap.getElementsByTagName('div');
+			for (var i=0;i<aDiv.length;i++){
+				aDiv[i].onmouseover=function(){
+					this.style.backgroundColor='#fff';
+					this.style.opacity=0;
+					this.style.filter='alpha(opacity:0)';
+				}
+			}
+
+			//div2
+			var oDiv2=document.getElementById("div2");
+			var oBtn2=oDiv2.getElementsByTagName('input')[0];
+			oBtn2.onclick=product2;
+			function product2(){
+				var len=10;
+				var str='';
+				var arr=['red','yellow','blue','green'];
+				var oUl=oDiv2.getElementsByTagName('ul')[0];
+				for(var i=0;i<len;i++){
+					str+='<li>'+i+'</li>';
+				}
+				oUl.innerHTML=str;
+				var aLi=oUl.getElementsByTagName('li');
+				var count=-1;
+				for(var i=0;i<aLi.length;i++){
+					aLi[i].style.backgroundColor=arr[i%arr.length];
+					aLi[i].style.left=i%10*60+'px';
+					if(i%10==0){
+						count++;
+					}
+					aLi[i].style.top=count*60+'px';
+				}
+			}
+
+			//div3
+			var oDiv3=document.getElementById("div3");
+			var oBtn3=oDiv3.getElementsByTagName('input')[0];
+			oBtn3.onclick=product3;
+			function product3(){
+				var len=100;//生成小方块的个数，即li的个数
+				var str='';
+				var arr=['red','yellow','blue','green'];
+				var oUl=oDiv3.getElementsByTagName('ul')[0];
+				for(var i=0;i<len;i++){
+					str+='<li>'+i+'</li>';
+				}
+				oUl.innerHTML=str;
+				var aLi=oUl.getElementsByTagName('li');
+				var count=-1;
+				for(var i=0;i<len;i++){
+					aLi[i].style.backgroundColor=arr[i%arr.length];
+					aLi[i].style.left=i%10*60+'px';
+					if(i%10==0){
+						count++;
+					}
+					aLi[i].style.top=count*60+'px';
+				}
+			}
+
+			//div4
+			var oDiv4=document.getElementById("div4");
+			var oBtn=oDiv4.getElementsByTagName('input')[0];
+			oBtn.onclick=function(){
+				var str='';
+				var len=5;//小正方形的个数，仅限单数
+				var oDiv=document.getElementById('wrap4');
+				for(var i=0;i<len;i++){
+					str+='<div>'+i+'</div>';
+				}
+
+				oDiv.innerHTML=str;
+
+				var aDiv=oDiv.getElementsByTagName("div");
+				var wid=aDiv[0].offsetWidth;
+				var mid=(len-1)/2;
+				for(var i=0;i<len;i++){
+					aDiv[i].style.left=i*wid+'px';
+					if(i<=mid){
+						aDiv[i].style.top=i*wid+'px';
+					}else{
+						aDiv[i].style.top=(len-1-i)*wid+'px';
+					}
+				}
+			}
+
+			//div5
+			var oDiv5=document.getElementById("div5");
+			var oBtn=oDiv5.getElementsByTagName('input')[0];
+			
+			var num=0;
+			oBtn.onclick=function(){
+				num++;
+				var str='';
+				var len=5;//小正方形的个数，仅限单数
+
+				var oDiv=document.getElementById('wrap5');
+				for(var i=0;i<len;i++){
+					str+='<div>'+i+'</div>';
+				}
+
+				oDiv.innerHTML=str;
+				var aDiv=oDiv.getElementsByTagName("div");
+				
+				if(num%4==1){
+					tab_change(aDiv,len,'left','top',1);
+					
+				}
+				if(num%4==2){
+					tab_change(aDiv,len,'top','left',0);
+				
+				}
+				if(num%4==3){
+					tab_change(aDiv,len,'left','top',0);
+				
+				}
+				if(num%4==0){
+					tab_change(aDiv,len,'top','left',1);
+					
+				}
+				
+				// var wid=aDiv[0].offsetWidth;
+				// var mid=(len-1)/2;
+				// for(var i=0;i<len;i++){
+							//tab_change(aDiv,len,left,top,1)
+						// aDiv[i].style.left=i*wid+'px';
+						// if(i<=mid){
+						// 	aDiv[i].style.top=(mid-i)*wid+'px';
+						// }else{
+						// 	aDiv[i].style.top=(i-mid)*wid+'px';
+						// }
+							//tab_change(aDiv,len,top,left,0)
+						// aDiv[i].style.top=i*wid+'px';
+						// if(i<=mid){
+						// 	aDiv[i].style.left=i*wid+'px';
+						// }else{
+						// 	aDiv[i].style.left=(len-1-i)*wid+'px';
+						// }
+							//tab_change(aDiv,len,left,top,0)
+						// aDiv[i].style.left=i*wid+'px';
+						// if(i<=mid){
+						// 	aDiv[i].style.top=i*wid+'px';
+						// }else{
+						// 	aDiv[i].style.top=(len-1-i)*wid+'px';
+						// }
+							//tab_change(aDiv,len,top,left,1)
+						// aDiv[i].style.top=i*wid+'px';
+						// if(i<=mid){
+						// 	aDiv[i].style.left=(mid-i)*wid+'px';
+						// }else{
+						// 	aDiv[i].style.left=(i-mid)*wid+'px';
+						// }
+					
+			}
+
+			function tab_change(obj,len,attr1,attr2,flag){
+				var wid=obj[0].offsetWidth;
+				var mid=(len-1)/2;
+				for(var i=0;i<len;i++){
+					obj[i].style[attr1]=i*wid+'px';
+					if(flag){
+						if(i<=mid){
+							obj[i].style[attr2]=(mid-i)*wid+'px';
+						}else{
+							obj[i].style[attr2]=(i-mid)*wid+'px';
+						}
+					}else{
+						if(i<=mid){
+							obj[i].style[attr2]=i*wid+'px';
+						}else{
+							obj[i].style[attr2]=(len-1-i)*wid+'px';
+						}
+					}
+					
+				}
+			}
+
+			//div6
+			var oDiv6=document.getElementById("div6");
+			var oBtn6=oDiv6.getElementsByTagName('input')[0];
+			var oWrap6=document.getElementById("wrap6");
+			oBtn6.onclick=function(){
+				var str='';
+				for ( var i=0 ;i<100;i++){
+						str+='<div>'+i+'</div>';
+				}
+				oWrap6.innerHTML=str;
+				var count=-1;
+				var aDiv=oWrap6.getElementsByTagName('div');
+				for(var i=0;i<aDiv.length;i++){
+					aDiv[i].style.left=i%10*60+'px';
+					if(i%10==0){
+						count++;
+					}
+					aDiv[i].style.top=count*60+'px';
+				}
+			}
+		}
+	</script>
+</head>
+<body>
+	<div id="div1">
+		<h3>1.图片擦除</h3>
+		<div id="wrap"></div>
+	</div>
+
+	<div id="div2">
+		<h3>2.自动生成10个Li</h3>
+		<input type="button" value="自动生成10个LI">
+		<ul></ul>
+	</div>
+
+	<div id="div3">
+		<h3>3.自动生成100个Li</h3>
+		<input type="button" value="自动生成100个LI">
+		<ul></ul>
+	</div>
+
+	<div id="div4">
+		<h3>4.自动生成一个V字型</h3>
+		<input type="button" value="自动生成一个V字型">
+		<div id="wrap4"></div>
+	</div>
+	
+	<div id="div5">
+		<h3>5.自动生成V字型(提高版)</h3>
+		<input type="button" value="自动生成V字型">
+		<div id="wrap5"></div>
+	</div>
+
+	<div id="div6">
+		<h3>计算元素坐标(逢10换行)</h3>
+		<input type="button" value="计算元素坐标(逢10换行)">
+		<div id="wrap6"></div>
+	</div>
+</body>
+</html>
